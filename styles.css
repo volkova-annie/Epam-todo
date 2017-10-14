@@ -1,0 +1,48 @@
+html, body {
+  width: 100%;
+}
+#app {
+  margin-top: 40px;
+  margin-left: 40px;
+}
+
+.new-task__button {
+  width: 100px;
+  height: 30px;
+  background-color: green;
+  border-radius: 8px;
+  border: 1px solid green;
+  color: white;
+  margin-left: 20px;
+}
+
+.new-task__input {
+  width: 300px;
+  height: 30px;
+  border-radius: 4px;
+}
+
+.tasks {
+  list-style: none;
+}
+
+.task {
+  display: flex;
+  height: 30px;
+}
+
+.task__delete {
+  background-color: red;
+  color: white;
+  width: 13px;
+  height: 13px;
+  display: flex;
+  justify-content: center;
+  /*align-items: center;*/
+  margin-left: 30px;
+  font-size: 10px;
+}
+
+.task__checkbox {
+  margin-right: 30px;
+}
