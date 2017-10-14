@@ -1,0 +1,10 @@
+{
+  "name": "",
+  "version": "",
+  "scripts": {
+    "bs": "node browser-sync"
+  },
+  "dependencies": {
+    "browser-sync": "^2.18.13"
+  }
+}
