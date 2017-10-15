@@ -1,7 +1,7 @@
 html, body {
   width: 100%;
 }
-#app {
+#todo-app {
   margin-top: 40px;
   margin-left: 40px;
 }
