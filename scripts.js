@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', start);
 
 function start() {
 	drawForm()
-  changeTaskState()
 }
 
 function drawForm() {
@@ -58,10 +57,14 @@ function drawTasks(task) {
 	else {
   	app.appendChild(ul)
 	}
-
 	const del = [].slice.call(document.querySelectorAll('.js-delete'))
 	del.forEach(function(el) {
 		return el.addEventListener('click', deleteTask)
+	})
+
+	const checkbox = [].slice.call(document.querySelectorAll('.js-task-checkbox'))
+	checkbox.forEach(function(el) {
+		return el.addEventListener('change', changeTaskState)
 	})
 }
 
@@ -75,11 +78,16 @@ function templater(html) {
   }
 }
 
-function changeTaskState(id) {
-  const task = document.querySelectorAll('.task')
-
-  // console.log(task);
-  // task.addEventListener('change', changeTaskState)
+function changeTaskState(event) {
+  const checked = event.target.checked
+	const task = event.target.parentNode
+	const taskID = task.dataset.id
+	tasks = tasks.map(function(el) {
+		if (el.id == taskID) {
+			el.done = checked
+		}
+		return el
+	})
 }
 
 function deleteTask(event) {
