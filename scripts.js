@@ -1,23 +1,17 @@
-const tasks = [
+let tasks = [
   // {
     // 'id': 1,
     // 'value': 'помыть машину',
     // 'done': true
-  // },
-  // {
-    // 'id': 2,
-    // 'value': 'купить продукты',
-    // 'done': false
   // }
 ]
 
-const taskTemplate = '<li data-id={{id}} class="task {{checked}}"><input class="js-task-checkbox task__checkbox" checked="{{checked}}" type="checkbox"/>{{value}}<div class="js-delete task__delete">x</div></li>'
+const taskTemplate = '<li data-id={{id}} class="task {{checked}}"><input class="js-task-checkbox task__checkbox" checked type="checkbox"/>{{value}}<div class="js-delete task__delete">x</div></li>'
 
 document.addEventListener('DOMContentLoaded', start);
 
 function start() {
 	drawForm()
-  deleteTask()
   changeTaskState()
 }
 
@@ -43,28 +37,32 @@ function addNewTask(event) {
 
   drawTasks()
   document.querySelector('.js-input').value = ''
-  // console.log(typeof value);
 }
 
 function drawTasks(task) {
   const ul = document.createElement('ul')
   ul.className = 'tasks'
   const app = document.getElementById('app');
+	const pattern = /\schecked/
   const li = tasks.map(function(el) {
-    const temp = taskTemplate
+    const temp = el.done ? taskTemplate : taskTemplate.replace(pattern, '')
     const checked = el.done ? 'is-checked' : ''
     const task = Object.assign({checked: checked}, el)
     return templater(temp)(task)
   }).join('')
-  // if (ul) {
-    ul.innerHTML = li
-    // console.log('hello');
-    // ul.insertBefore(li, ul.childNodes[0])
-  // }
-  // else {
-    app.appendChild(ul)
-    // console.log('world');
-  // }
+	const findUl = document.querySelector('ul.tasks');
+	ul.innerHTML = li
+	if (findUl) {
+		app.replaceChild(ul, findUl)
+	}
+	else {
+  	app.appendChild(ul)
+	}
+
+	const del = [].slice.call(document.querySelectorAll('.js-delete'))
+	del.forEach(function(el) {
+		return el.addEventListener('click', deleteTask)
+	})
 }
 
 function templater(html) {
@@ -80,30 +78,15 @@ function templater(html) {
 function changeTaskState(id) {
   const task = document.querySelectorAll('.task')
 
-  console.log(task);
-  task.addEventListener('change', changeTaskState)
+  // console.log(task);
+  // task.addEventListener('change', changeTaskState)
 }
 
-function deleteTask(id) {
-  if (tasks.length > 1) {
-    for (var i=0; i<tasks.length; i++) {
-      var del = document.querySelectorAll('.js-delete')
-      del.addEventListener('click', changeTaskState)
-      // delete this.tasks[i]
-    }
-    // console.log('hello');
-
-  // del.addEventListener( 'click' , function(el) {
-  //   console.log('hello');
-
-  }
-    // li.remove();
-    // saveState();
-    // return false;
-  // });
-
-}
-
-function changeTaskState() {
-  console.log('hello');
+function deleteTask(event) {
+	const task = event.target.parentNode
+	const taskID = task.dataset.id
+	tasks = tasks.filter(function(el) {
+		return el.id != taskID
+	})
+	drawTasks()
 }
