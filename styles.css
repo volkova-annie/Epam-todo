@@ -46,3 +46,7 @@ html, body {
 .task__checkbox {
   margin-right: 30px;
 }
+
+.is-checked {
+  text-decoration: line-through;
+}
