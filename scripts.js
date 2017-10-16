@@ -28,7 +28,8 @@ module.exports = function() {
 		const value = input.value
 
 		if (value.length > 0) {
-			this.tasks.push({'id':this.tasks.length+1, 'value': value, 'done': false })
+      const newID = this.tasks.length > 0 ? this.tasks[this.tasks.length-1].id + 1 : 1
+			this.tasks.push({'id': newID, 'value': value, 'done': false })
 		}
 
 		this.drawTasks()
@@ -56,15 +57,16 @@ module.exports = function() {
 		else {
 			app.appendChild(ul)
 		}
+    const checkbox = [].slice.call(document.querySelectorAll('.js-task-checkbox'))
+    checkbox.forEach((el) => {
+      return el.addEventListener('change', this.changeTaskState)
+    })
+
 		const del = [].slice.call(document.querySelectorAll('.js-delete'))
-		del.forEach(function(el) {
+		del.forEach((el) => {
 			return el.addEventListener('click', this.deleteTask)
 		})
 
-		const checkbox = [].slice.call(document.querySelectorAll('.js-task-checkbox'))
-		checkbox.forEach((el) => {
-			return el.addEventListener('change', this.changeTaskState)
-		})
 	}
 
 	this.templater = (html) => {
@@ -87,6 +89,7 @@ module.exports = function() {
 			}
 			return el
 		})
+    this.drawTasks()
 	}
 
 	this.deleteTask = (event) => {
