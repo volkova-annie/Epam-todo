@@ -1,50 +1,84 @@
-html, body {
+/*html, body {
   width: 100%;
-}
+}*/
 #todo-app {
   margin-top: 40px;
   margin-left: 40px;
+  display: inline-block;
 }
 
 .new-task__button {
   width: 100px;
   height: 36px;
-  background-color: green;
+  background-color: #008080;
   border-radius: 8px;
-  border: 1px solid green;
+  border: 1px solid #008080;
   color: white;
   margin-left: 20px;
+  cursor: pointer;
+  outline: none;
+}
+
+.new-task__button:active,  .new-task__button:focus{
+  border-radius: 8px;
+  border: 2px solid rgb(59, 153, 252);
 }
 
 .new-task__input {
   width: 300px;
   height: 30px;
   border-radius: 4px;
+  cursor: pointer;
 }
 
 .tasks {
   list-style: none;
+  padding-left: 0;
 }
 
+label {
+  cursor: pointer;
+  z-index: 1;
+}
 .task {
   display: flex;
   height: 30px;
+  position: relative;
+  align-items: center;
+}
+
+.task:hover {
+  background-color: #F0F8FF;
+  border-radius: 4px;
 }
 
 .task__delete {
-  background-color: red;
+  background-color: #CD5C5C;
   color: white;
   width: 13px;
   height: 13px;
+  border-radius: 4px;
   display: flex;
   justify-content: center;
-  /*align-items: center;*/
-  margin-left: 30px;
   font-size: 10px;
+  position: absolute;
+  right: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  z-index: 2;
+
 }
+
+.task__delete:active, .task__delete:focus {
+  border-radius: 4px;
+  border: 1px solid #A52A2A;
+}
+
 
 .task__checkbox {
   margin-right: 30px;
+  cursor: pointer;
 }
 
 .is-checked {
