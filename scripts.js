@@ -37,7 +37,14 @@ module.exports = function() {
 	}
 
 	this.drawTasks = () => {
-		window.taskTemplate = '<li data-id={{id}} class="task {{checked}}"><input class="js-task-checkbox task__checkbox" checked type="checkbox"/>{{value}}<div class="js-delete task__delete">x</div></li>'
+		// const taskTemplate = '<li data-id={{id}} class="task {{checked}}"><input class="js-task-checkbox task__checkbox" checked type="checkbox"/>{{value}}<div class="js-delete task__delete">x</div></li>'
+    const taskTemplate = `<li class="task {{checked}}">
+      <label data-id={{id}} for="task-{{id}}">
+        <input id="task-{{id}}" class="js-task-checkbox task__checkbox" checked type="checkbox"/>{{value}}
+      </label>
+      <div data-id={{id}} class="js-delete task__delete">x</div>
+
+    </li>`
 
 		const ul = document.createElement('ul')
 		ul.className = 'tasks'
@@ -66,7 +73,6 @@ module.exports = function() {
 		del.forEach((el) => {
 			return el.addEventListener('click', this.deleteTask)
 		})
-
 	}
 
 	this.templater = (html) => {
@@ -93,7 +99,8 @@ module.exports = function() {
 	}
 
 	this.deleteTask = (event) => {
-		const task = event.target.parentNode
+		const task = event.target
+		// const task = event.target.parentNode
 		const taskID = task.dataset.id
 		this.tasks = this.tasks.filter(function(el) {
 			return el.id != taskID
