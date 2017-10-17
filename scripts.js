@@ -9,15 +9,34 @@ module.exports = function() {
     app = el.appendChild(app)
 
     this.drawForm(app)
+
 	}
 
 	this.drawForm = (app) => {
-		const html = '<form id="js-newtask-form" class="new-task"><input name="newTask" class="js-input new-task__input" type="text" value="" placeholder="Add new task"/><button class="new-task__button">Add</button></form>'
+		const html = `<form id="js-newtask-form" class="new-task">
+      <input name="newTask" class="js-input new-task__input" type="text" value="" placeholder="Add new task"/>
+      <label class="new-task__deadline">Deadline:</label>
+      <input name="TaskDeadline" class="js-deadline new-task__input-date" type="date" value=""/>
+      <button class="new-task__button">Add</button>
+    </form>
+    <label>Sort:</label>
+    <select class="tasks-select js-select">
+      <option value="" selected>---</option>
+      <option value="all">All</option>
+      <option value="done">Done</option>
+      <option value="not-done">Not done</option>
+      <option value="tomorrow">For tomorrow</option>
+      <option value="week">For week</option>
+    </select>
+    `
 		const form = document.createElement('form')
 		app.appendChild(form)
 		form.outerHTML = html
 		const appendedForm = document.querySelector('#js-newtask-form')
 		appendedForm.addEventListener('submit', this.addNewTask)
+
+    const select = document.querySelector('.js-select')
+    select.addEventListener('change', this.sort)
 	}
 
 	this.addNewTask = (event) => {
@@ -26,10 +45,11 @@ module.exports = function() {
 		const form = event.target
 		const input = form.elements.newTask
 		const value = input.value
+    const deadline = form.elements.TaskDeadline.value
 
 		if (value.length > 0) {
       const newID = this.tasks.length > 0 ? this.tasks[this.tasks.length-1].id + 1 : 1
-			this.tasks.push({'id': newID, 'value': value, 'done': false })
+			this.tasks.push({'id': newID, 'value': value, 'done': false, 'deadline': deadline })
 		}
 
 		this.drawTasks()
@@ -42,6 +62,7 @@ module.exports = function() {
       <label data-id={{id}} for="task-{{id}}">
         <input id="task-{{id}}" class="js-task-checkbox task__checkbox" checked type="checkbox"/>{{value}}
       </label>
+      <div class="js-deadline task__deadline">{{deadline}}</div>
       <div data-id={{id}} class="js-delete task__delete">x</div>
 
     </li>`
@@ -107,4 +128,37 @@ module.exports = function() {
 		})
 		this.drawTasks()
 	}
+
+  this.sort = (event) => {
+    const value = event.target.value
+    const today = new Date()
+    const tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000).setHours(3,0,0,0);
+    const week = new Date(new Date().getTime() + 24 * 60 * 60 * 7 * 1000)
+    if (value == 'done') {
+      this.tasks = this.tasks.filter(function(el) {
+        return el.done == true
+  		})
+    }
+    else if (value == 'not-done') {
+      this.tasks = this.tasks.filter(function(el) {
+        return el.done != true
+  		})
+    }
+    else if (value == 'tomorrow') {
+      this.tasks = this.tasks.filter(function(el) {
+        console.log(new Date(el.deadline));
+        console.log(new Date(tomorrow));
+        return new Date(el.deadline) == tomorrow
+      })
+    }
+    else if (value == 'week') {
+      this.tasks = this.tasks.filter(function(el) {
+        return new Date(el.deadline) <= week
+      })
+    }
+    else {
+      return this.tasks
+    }
+    this.drawTasks()
+  }
 }
