@@ -14,7 +14,6 @@
   border-radius: 8px;
   border: 1px solid #008080;
   color: white;
-  margin-left: 20px;
   cursor: pointer;
   outline: none;
 }
@@ -29,6 +28,19 @@
   height: 30px;
   border-radius: 4px;
   cursor: pointer;
+}
+
+.new-task__input-date {
+  border-radius: 4px;
+  cursor: pointer;
+  height: 30px;
+  width: 150px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.new-task__deadline {
+  margin-left: 20px;
 }
 
 .tasks {
@@ -81,6 +93,19 @@ label {
   cursor: pointer;
 }
 
+.task__deadline {
+  position: absolute;
+  right: 60px;
+  color: gray;
+}
+
 .is-checked {
   text-decoration: line-through;
+}
+
+.tasks-select {
+  width: 60%;
+  margin: auto;
+  margin-top: 20px;
+  margin-left: 20px;
 }
