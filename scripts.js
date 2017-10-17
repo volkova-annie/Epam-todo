@@ -47,6 +47,7 @@ module.exports = function() {
 		const value = input.value
     const deadline = form.elements.TaskDeadline.value
 
+
 		if (value.length > 0) {
       const newID = this.tasks.length > 0 ? this.tasks[this.tasks.length-1].id + 1 : 1
 			this.tasks.push({'id': newID, 'value': value, 'done': false, 'deadline': deadline })
@@ -54,15 +55,15 @@ module.exports = function() {
 
 		this.drawTasks()
 		document.querySelector('.js-input').value = ''
+		document.querySelector('.js-deadline').value = ''
 	}
 
 	this.drawTasks = () => {
-		// const taskTemplate = '<li data-id={{id}} class="task {{checked}}"><input class="js-task-checkbox task__checkbox" checked type="checkbox"/>{{value}}<div class="js-delete task__delete">x</div></li>'
     const taskTemplate = `<li class="task {{checked}}">
       <label data-id={{id}} for="task-{{id}}">
         <input id="task-{{id}}" class="js-task-checkbox task__checkbox" checked type="checkbox"/>{{value}}
       </label>
-      <div class="js-deadline task__deadline">{{deadline}}</div>
+      <div class="js-deadline task__deadline">Deadline: {{deadline}}</div>
       <div data-id={{id}} class="js-delete task__delete">x</div>
 
     </li>`
@@ -121,7 +122,6 @@ module.exports = function() {
 
 	this.deleteTask = (event) => {
 		const task = event.target
-		// const task = event.target.parentNode
 		const taskID = task.dataset.id
 		this.tasks = this.tasks.filter(function(el) {
 			return el.id != taskID
@@ -134,21 +134,20 @@ module.exports = function() {
     const today = new Date()
     const tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000).setHours(3,0,0,0);
     const week = new Date(new Date().getTime() + 24 * 60 * 60 * 7 * 1000)
+
     if (value == 'done') {
       this.tasks = this.tasks.filter(function(el) {
-        return el.done == true
+      return el.done === true
   		})
     }
     else if (value == 'not-done') {
       this.tasks = this.tasks.filter(function(el) {
-        return el.done != true
+        return el.done === false
   		})
     }
     else if (value == 'tomorrow') {
       this.tasks = this.tasks.filter(function(el) {
-        console.log(new Date(el.deadline));
-        console.log(new Date(tomorrow));
-        return new Date(el.deadline) == tomorrow
+        return new Date(el.deadline)/1000 === tomorrow/1000
       })
     }
     else if (value == 'week') {
