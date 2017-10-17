@@ -14,9 +14,9 @@ module.exports = function() {
 
 	this.drawForm = (app) => {
 		const html = `<form id="js-newtask-form" class="new-task">
-      <input name="newTask" class="js-input new-task__input" type="text" value="" placeholder="Add new task"/>
+      <input name="newTask" class="js-input new-task__input" type="text" value="" placeholder="Add new task" required/>
       <label class="new-task__deadline">Deadline:</label>
-      <input name="TaskDeadline" class="js-deadline new-task__input-date" type="date" value=""/>
+      <input name="TaskDeadline" class="js-deadline new-task__input-date" type="date" value="" required/>
       <button class="new-task__button">Add</button>
     </form>
     <label>Sort:</label>
@@ -46,7 +46,6 @@ module.exports = function() {
 		const input = form.elements.newTask
 		const value = input.value
     const deadline = form.elements.TaskDeadline.value
-
 
 		if (value.length > 0) {
       const newID = this.tasks.length > 0 ? this.tasks[this.tasks.length-1].id + 1 : 1
