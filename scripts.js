@@ -9,10 +9,10 @@ module.exports = function() {
 	}
 
 	this.drawForm = (el) => {
-		const html = `<form id="js-newtask-form" class="new-task">
+    const html = `<form id="js-newtask-form" class="new-task">
       <input name="newTask" class="js-input new-task__input" type="text" value="" placeholder="Add new task" required/>
       <label class="new-task__deadline">Deadline:</label>
-      <input name="TaskDeadline" class="js-deadline new-task__input-date" type="date" value="" required/>
+      <input name="TaskDeadline" class="js-deadline new-task__input-date" type="date" required/>
       <button class="new-task__button">Add</button>
     </form>
     <label>Sort:</label>
@@ -23,8 +23,8 @@ module.exports = function() {
       <option value="not-done">Not done</option>
       <option value="tomorrow">For tomorrow</option>
       <option value="week">For week</option>
-    </select>
-    `
+    </select>`
+
 		const form = document.createElement('form')
 		el.appendChild(form)
 		form.outerHTML = html
