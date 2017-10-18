@@ -9,7 +9,6 @@ module.exports = function() {
     app = el.appendChild(app)
 
     this.drawForm(app)
-
 	}
 
 	this.drawForm = (app) => {
@@ -41,9 +40,8 @@ module.exports = function() {
 
   this.onChange = (event) => {
     const value = event.target.value
-
-    const sorteted = this.sort(value)
-    this.drawTasks(sorteted)
+    const sorted = this.sort(value)
+    this.drawTasks(sorted)
   }
 
 	this.addNewTask = (event) => {
@@ -140,10 +138,10 @@ module.exports = function() {
     const today = new Date()
     const tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000).setHours(3,0,0,0);
     const week = new Date(new Date().getTime() + 24 * 60 * 60 * 7 * 1000)
-    
+
     if (value == 'done') {
       return this.tasks.filter(function(el) {
-        return el.done === true
+        return el.done
   		})
     }
     else if (value == 'not-done') {
