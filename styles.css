@@ -1,8 +1,21 @@
-#todo-app {
-  margin-top: 40px;
-  margin-left: 40px;
-  display: inline-block;
+/*Restyling for 2 todo lists START*/
+body {
+  display:flex;
+  justify-content: space-around;
 }
+
+.test1, .test2 {
+  margin-top: 50px;
+  max-width: 50%;
+  width: 45%;
+}
+
+.new-task {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+/*Restyling for 2 todo lists END*/
 
 .new-task__button {
   width: 100px;
@@ -25,7 +38,6 @@
   height: 30px;
   border-radius: 4px;
   cursor: pointer;
-  padding-left: 10px;
 }
 
 .new-task__input-date {
@@ -33,12 +45,6 @@
   cursor: pointer;
   height: 30px;
   width: 150px;
-  margin-left: 20px;
-  margin-right: 20px;
-}
-
-.new-task__deadline {
-  margin-left: 20px;
 }
 
 .tasks {
@@ -65,7 +71,7 @@ label {
 
 .task__delete {
   background-color: #CD5C5C;
-  color: white;
+  color: #FFFFFF;
   width: 13px;
   height: 13px;
   border-radius: 4px;
@@ -107,25 +113,4 @@ label {
   margin: auto;
   margin-top: 20px;
   margin-left: 20px;
-}
-
-/*Restyle 2 todo lists*/
-body {
-  display:flex;
-  flex-wrap: nowrap;
-}
-
-.test1, .test2 {
-  margin-left: 15px;
-  margin-top: 50px;
-  max-width: 50%;
-}
-
-.test1 {
-  /*border-right: 1px solid gray;*/
-}
-
-.new-task {
-  display: flex;
-  align-items: baseline;
 }
