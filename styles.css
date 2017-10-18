@@ -108,3 +108,24 @@ label {
   margin-top: 20px;
   margin-left: 20px;
 }
+
+/*Restyle 2 todo lists*/
+body {
+  display:flex;
+  flex-wrap: nowrap;
+}
+
+.test1, .test2 {
+  margin-left: 15px;
+  margin-top: 50px;
+  max-width: 50%;
+}
+
+.test1 {
+  /*border-right: 1px solid gray;*/
+}
+
+.new-task {
+  display: flex;
+  align-items: baseline;
+}
