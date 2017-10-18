@@ -2,8 +2,15 @@
   margin-top: 40px;
   margin-left: 40px;
   display: inline-block;
+  width: 50%;
 }
 
+.new-task {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
 .new-task__button {
   width: 100px;
   height: 36px;
@@ -33,12 +40,6 @@
   cursor: pointer;
   height: 30px;
   width: 150px;
-  margin-left: 20px;
-  margin-right: 20px;
-}
-
-.new-task__deadline {
-  margin-left: 20px;
 }
 
 .tasks {
@@ -84,7 +85,6 @@ label {
   border-radius: 4px;
   border: 1px solid #A52A2A;
 }
-
 
 .task__checkbox {
   margin-right: 30px;
