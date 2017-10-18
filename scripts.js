@@ -3,15 +3,12 @@ module.exports = function() {
   this.tasks = []
 
   this.init = (el) => {
-    let app = document.createElement('div')
-    app.id = 'todo-app'
+    this.node = el
 
-    app = el.appendChild(app)
-
-    this.drawForm(app)
+    this.drawForm(el)
 	}
 
-	this.drawForm = (app) => {
+	this.drawForm = (el) => {
 		const html = `<form id="js-newtask-form" class="new-task">
       <input name="newTask" class="js-input new-task__input" type="text" value="" placeholder="Add new task" required/>
       <label class="new-task__deadline">Deadline:</label>
@@ -29,13 +26,18 @@ module.exports = function() {
     </select>
     `
 		const form = document.createElement('form')
-		app.appendChild(form)
+		el.appendChild(form)
 		form.outerHTML = html
-		const appendedForm = document.querySelector('#js-newtask-form')
-		appendedForm.addEventListener('submit', this.addNewTask)
+    if (this.node) {
+      const appendedForm = this.node.querySelector('#js-newtask-form')
+      appendedForm.addEventListener('submit', this.addNewTask)
 
-    const select = document.querySelector('.js-select')
-    select.addEventListener('change', this.onChange)
+      const select = this.node.querySelector('.js-select')
+      select.addEventListener('change', this.onChange)
+    }
+    else {
+      console.error('no node')
+    }
 	}
 
   this.onChange = (event) => {
@@ -58,48 +60,57 @@ module.exports = function() {
 		}
 
 		this.drawTasks()
-		document.querySelector('.js-input').value = ''
-		document.querySelector('.js-deadline').value = ''
+    if (this.node) {
+  		this.node.querySelector('.js-input').value = ''
+  		this.node.querySelector('.js-deadline').value = ''
+    }
+    else {
+      console.error('no node')
+    }
 	}
 
 	this.drawTasks = (tasks) => {
-    const taskTemplate = `<li class="task {{checked}}">
-      <label data-id={{id}} for="task-{{id}}">
-        <input id="task-{{id}}" class="js-task-checkbox task__checkbox" checked type="checkbox"/>{{value}}
-      </label>
-      <div class="js-deadline task__deadline">Deadline: {{deadline}}</div>
-      <div data-id={{id}} class="js-delete task__delete">x</div>
-    </li>`
+    if (this.node) {
+      const taskTemplate = `<li class="task {{checked}}">
+        <label data-id={{id}} for="task-{{id}}">
+          <input id="task-{{id}}" class="js-task-checkbox task__checkbox" checked type="checkbox"/>{{value}}
+        </label>
+        <div class="js-deadline task__deadline">Deadline: {{deadline}}</div>
+        <div data-id={{id}} class="js-delete task__delete">x</div>
+      </li>`
 
-    let tasksLocal = tasks || this.tasks
+      let tasksLocal = tasks || this.tasks
 
-		const ul = document.createElement('ul')
-		ul.className = 'tasks'
-		const app = document.getElementById('todo-app');
-		const pattern = /\schecked/
-		const li = tasksLocal.map((el) => {
-			const temp = el.done ? taskTemplate : taskTemplate.replace(pattern, '')
-			const checked = el.done ? 'is-checked' : ''
-			const task = Object.assign({checked: checked}, el)
-			return this.templater(temp)(task)
-		}).join('')
-		const findUl = document.querySelector('ul.tasks');
-		ul.innerHTML = li
-		if (findUl) {
-			app.replaceChild(ul, findUl)
-		}
-		else {
-			app.appendChild(ul)
-		}
-    const checkbox = [].slice.call(document.querySelectorAll('.js-task-checkbox'))
-    checkbox.forEach((el) => {
-      return el.addEventListener('change', this.changeTaskState)
-    })
+  		const ul = document.createElement('ul')
+  		ul.className = 'tasks'
+  		const pattern = /\schecked/
+  		const li = tasksLocal.map((el) => {
+  			const temp = el.done ? taskTemplate : taskTemplate.replace(pattern, '')
+  			const checked = el.done ? 'is-checked' : ''
+  			const task = Object.assign({checked: checked}, el)
+  			return this.templater(temp)(task)
+  		}).join('')
+  		const findUl = this.node.querySelector('ul.tasks');
+  		ul.innerHTML = li
+  		if (findUl) {
+  			this.node.replaceChild(ul, findUl)
+  		}
+  		else {
+  			this.node.appendChild(ul)
+  		}
+      const checkbox = [].slice.call(this.node.querySelectorAll('.js-task-checkbox'))
+      checkbox.forEach((el) => {
+        return el.addEventListener('change', this.changeTaskState)
+      })
 
-		const del = [].slice.call(document.querySelectorAll('.js-delete'))
-		del.forEach((el) => {
-			return el.addEventListener('click', this.deleteTask)
-		})
+  		const del = [].slice.call(this.node.querySelectorAll('.js-delete'))
+  		del.forEach((el) => {
+  			return el.addEventListener('click', this.deleteTask)
+  		})
+    }
+    else {
+      console.error('no node')
+    }
 	}
 
 	this.templater = (html) => {
@@ -113,6 +124,7 @@ module.exports = function() {
 	}
 
 	this.changeTaskState = (event) => {
+    console.log(event);
 		const checked = event.target.checked
 		const task = event.target.parentNode
 		const taskID = task.dataset.id
