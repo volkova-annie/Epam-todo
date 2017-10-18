@@ -36,8 +36,15 @@ module.exports = function() {
 		appendedForm.addEventListener('submit', this.addNewTask)
 
     const select = document.querySelector('.js-select')
-    select.addEventListener('change', this.sort)
+    select.addEventListener('change', this.onChange)
 	}
+
+  this.onChange = (event) => {
+    const value = event.target.value
+
+    const sorteted = this.sort(value)
+    this.drawTasks(sorteted)
+  }
 
 	this.addNewTask = (event) => {
 		event.preventDefault()
@@ -57,21 +64,22 @@ module.exports = function() {
 		document.querySelector('.js-deadline').value = ''
 	}
 
-	this.drawTasks = () => {
+	this.drawTasks = (tasks) => {
     const taskTemplate = `<li class="task {{checked}}">
       <label data-id={{id}} for="task-{{id}}">
         <input id="task-{{id}}" class="js-task-checkbox task__checkbox" checked type="checkbox"/>{{value}}
       </label>
       <div class="js-deadline task__deadline">Deadline: {{deadline}}</div>
       <div data-id={{id}} class="js-delete task__delete">x</div>
-
     </li>`
+
+    let tasksLocal = tasks || this.tasks
 
 		const ul = document.createElement('ul')
 		ul.className = 'tasks'
 		const app = document.getElementById('todo-app');
 		const pattern = /\schecked/
-		const li = this.tasks.map((el) => {
+		const li = tasksLocal.map((el) => {
 			const temp = el.done ? taskTemplate : taskTemplate.replace(pattern, '')
 			const checked = el.done ? 'is-checked' : ''
 			const task = Object.assign({checked: checked}, el)
@@ -128,35 +136,33 @@ module.exports = function() {
 		this.drawTasks()
 	}
 
-  this.sort = (event) => {
-    const value = event.target.value
+  this.sort = (value) => {
     const today = new Date()
     const tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000).setHours(3,0,0,0);
     const week = new Date(new Date().getTime() + 24 * 60 * 60 * 7 * 1000)
-
+    
     if (value == 'done') {
-      this.tasks = this.tasks.filter(function(el) {
-      return el.done === true
+      return this.tasks.filter(function(el) {
+        return el.done === true
   		})
     }
     else if (value == 'not-done') {
-      this.tasks = this.tasks.filter(function(el) {
+      return this.tasks.filter(function(el) {
         return el.done === false
   		})
     }
     else if (value == 'tomorrow') {
-      this.tasks = this.tasks.filter(function(el) {
+      return this.tasks.filter(function(el) {
         return new Date(el.deadline)/1000 === tomorrow/1000
       })
     }
     else if (value == 'week') {
-      this.tasks = this.tasks.filter(function(el) {
+      return this.tasks.filter(function(el) {
         return new Date(el.deadline) <= week
       })
     }
     else {
       return this.tasks
     }
-    this.drawTasks()
   }
 }
