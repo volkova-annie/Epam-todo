@@ -31,13 +31,11 @@
   width: 300px;
   height: 30px;
   border-radius: 4px;
-  cursor: pointer;
   padding-left: 10px;
 }
 
 .new-task__input-date {
   border-radius: 4px;
-  cursor: pointer;
   height: 30px;
   width: 150px;
 }
