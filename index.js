@@ -1,4 +1,4 @@
-import Todo from './scripts'
+import {Todo} from './scripts'
 
 document.addEventListener('DOMContentLoaded', start)
 
