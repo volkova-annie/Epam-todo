@@ -29,7 +29,7 @@ export function Todo() {
 
     const select = document.querySelector('.js-select');
     select.addEventListener('change', onSort);
-	}
+  }
 
   const drawTasks = (tsks) => {
     const taskTemplate = `<li class="task {{checked}}">
@@ -62,7 +62,7 @@ export function Todo() {
     }
     else {
       app.appendChild(ul);
-		}
+    }
 
     const checkbox = [].slice.call(document.querySelectorAll('.js-task-checkbox'));
 
@@ -95,13 +95,13 @@ export function Todo() {
     if (value.length > 0) {
       const newID = tasks.length > 0 ? tasks[tasks.length-1].id + 1 : 1;
       tasks.push({'id': newID, 'value': value, 'done': false, 'deadline': deadline });
-		}
+    }
 
     drawTasks();
 
     document.querySelector('.js-input').value = '';
     document.querySelector('.js-deadline').value = '';
-	}
+  }
 
   const templater = (html) => {
     return function(data) {
@@ -126,9 +126,9 @@ export function Todo() {
     });
 
     drawTasks();
-	};
+  };
 
-	const deleteTask = (event) => {
+  const deleteTask = (event) => {
     if (confirm('You sure?')) {
       const task = event.target;
       const taskID = task.dataset.id;
@@ -139,7 +139,7 @@ export function Todo() {
 
       drawTasks();
     }
-	}
+  }
 
   const sort = (value) => {
     const tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000).setHours(3,0,0,0);
