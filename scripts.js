@@ -10,7 +10,7 @@ export function Todo() {
       <button class="new-task__button">Add</button>
     </form>
     <label>Sort:</label>
-    <select class="tasks-select js-select">
+    <select class="tasks-select js-filter">
       <option value="" selected>---</option>
       <option value="all">All</option>
       <option value="done">Done</option>
@@ -27,7 +27,7 @@ export function Todo() {
     const appendedForm = document.querySelector('#js-newtask-form');
     appendedForm.addEventListener('submit', addNewTask);
 
-    const select = document.querySelector('.js-select');
+    const select = document.querySelector('.js-filter');
     select.addEventListener('change', onSort);
   }
 
@@ -48,10 +48,10 @@ export function Todo() {
 
     ul.className = 'tasks';
     const li = tasksLocal.map((el) => {
-      const temp = el.done ? taskTemplate : taskTemplate.replace(pattern, '')
-      const checked = el.done ? 'is-checked' : ''
-      const task = Object.assign({checked: checked}, el)
-      return templater(temp)(task)
+      const temp = el.done ? taskTemplate : taskTemplate.replace(pattern, '');
+      const checked = el.done ? 'is-checked' : '';
+      const task = Object.assign({checked: checked}, el);
+      return templater(temp)(task);
     }).join('');
     const findUl = document.querySelector('ul.tasks');
 
