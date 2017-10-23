@@ -105,8 +105,8 @@ export function Todo() {
 
   const templater = (html) => {
     return function(data) {
-      for (var x in data) {
-        var re = '{{\\s?' + x + '\\s?}}';
+      for (let x in data) {
+        const re = '{{\\s?' + x + '\\s?}}';
         html = html.replace(new RegExp(re, 'ig'), data[x]);
       }
       return html;
